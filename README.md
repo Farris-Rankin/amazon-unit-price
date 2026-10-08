@@ -76,7 +76,7 @@ Every delivered userscript filename includes its version. `npm run release` gene
 
 ## Source and updates
 
-The public source is [Farris-Rankin/amazon-unit-price](https://github.com/Farris-Rankin/amazon-unit-price). Greasy Fork synchronizes from the stable development filename on `main`; versioned files remain available for manual installation. Script updates must increase `@version` and the matching package version so installed users can receive them.
+The public source is [Farris-Rankin/amazon-unit-price](https://github.com/Farris-Rankin/amazon-unit-price). Greasy Fork periodically checks the stable development filename on `main`; versioned files remain available for manual installation. A push webhook can notify Greasy Fork sooner. Script updates must increase `@version` and the matching package version so installed users can receive them.
 
 ## License
 
