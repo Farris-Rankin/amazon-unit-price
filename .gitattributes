@@ -1,0 +1,3 @@
+# Keep published userscript bytes identical to the versioned release.
+*.user.js -text
+private/hooks/* text eol=lf

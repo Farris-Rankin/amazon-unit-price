@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="color-scheme" content="dark">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Amazon unit-price script — local test</title>
+  <style>
+    :root{color-scheme:dark;background:#10151c;color:#c8d1da;font:16px/1.5 system-ui}
+    body{margin:0;padding:36px 24px;max-width:1040px;margin-inline:auto}
+    h1{font-size:26px;font-weight:550;color:#d4dfe8;margin:0 0 8px}p{color:#a7b4bf;margin:0 0 28px}
+    .s-main-slot{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+    [data-asin]{border:1px solid #344553;border-radius:8px;background:#17202a;padding:20px;min-height:210px}
+    h2{font-size:17px;font-weight:500;margin:16px 0 20px;color:#cddce8}.a-price{font-size:24px;color:#d2dce5;display:inline-block}
+    .unit{display:block;font-size:14px;color:#94a5b3;margin:6px 0}.type{font-size:12px;color:#91a2b0}
+    #banner{grid-column:1/-1;background:#1b2632;border:1px solid #384c5e;border-radius:5px;padding:10px 18px;font-size:14px;color:#a7b6c4}
+    .footer{margin-top:24px;font-size:14px;color:#96a7b3}a{color:#a9cfdf}
+    .sort-row{display:flex;justify-content:flex-end;margin:-10px 0 20px;gap:6px;align-items:center}
+    .a-dropdown-container{display:flex;align-items:center;gap:6px}
+    select{color-scheme:dark;background:#172630;color:#c5e5de;border:1px solid #405b63;padding:5px;font:14px system-ui}
+    label{color:#a7b4bf;font-size:14px}
+    @media(max-width:740px){.s-main-slot{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  </style>
+</head>
+<body>
+  <h1>Choose the unit, compare the price</h1>
+  <p>Local test: the reported transparency-film titles and prices among invented comparison offers. The same userscript sorts and labels these cards.</p>
+  <div class="sort-row"><div class="a-dropdown-container">
+    <label for="s-result-sort-select" class="a-native-dropdown">Sort by:</label>
+    <select id="s-result-sort-select" data-action="a-dropdown-select">
+      <option value="relevanceblender" selected>Featured</option>
+      <option value="price-asc-rank" data-url="/s?s=price-asc-rank">Price: Low to High</option>
+      <option value="price-desc-rank">Price: High to Low</option>
+    </select><span class="a-button-dropdown" hidden>Sort by: Featured</span>
+  </div></div>
+  <div class="s-main-slot">
+    <article data-component-type="s-search-result" data-asin="DEMO-COUNT">
+      <span class="type">Reported listing: per 100 sheets</span>
+      <h2><a>Laser Transparency Film 8.5 x 11" 100 Sheets 4mil PET Double-sided Overhead Projector Film</a></h2>
+      <div class="offer"><span class="a-price"><span class="a-offscreen">$14.02</span></span><span class="unit">($14.02/100 Sheets)</span></div>
+    </article>
+    <article data-component-type="s-search-result" data-asin="DEMO-OUNCE">
+      <span class="type">Reported listing: per 100 sheets</span>
+      <h2><a>Samsill Transparency Film for Laser Printers, 100 Sheets, Not for Inkjet</a></h2>
+      <div class="offer"><span class="a-price"><span class="a-offscreen">$13.80</span></span><span class="unit">List: $17.44 ($13.80/100 Sheets)</span></div>
+    </article>
+    <article data-component-type="s-search-result" data-asin="DEMO-MISSING">
+      <span class="type">Amazon label: no unit price</span>
+      <h2><a>Transparency film, 100-sheet pack</a></h2>
+      <div class="offer"><span class="a-price"><span class="a-offscreen">$18.00</span></span></div>
+    </article>
+    <div id="banner">This banner stays in its original slot when product cards move.</div>
+    <article data-component-type="s-search-result" data-asin="DEMO-LB">
+      <span class="type">Reported listing: no unit price</span>
+      <h2><a>VELCRO Brand Cut-to-Length Straps Roll, 30ft x 1/2in, Black</a></h2>
+      <div class="offer"><span class="a-price"><span class="a-offscreen">$8.80</span></span></div>
+    </article>
+    <article data-component-type="s-search-result" data-asin="DEMO-MULTI">
+      <span class="type">Amazon label: no unit price</span>
+      <h2><a>Transparency film, 100 sheets (Pack of 2)</a></h2>
+      <div class="offer"><span class="a-price"><span class="a-offscreen">$32.00</span></span></div>
+    </article>
+    <article data-component-type="s-search-result" data-asin="DEMO-UNKNOWN">
+      <span class="type">Title gives capacity, no package count</span>
+      <h2><a>Printer 100 sheet capacity</a></h2>
+      <div class="offer"><span class="a-price"><span class="a-offscreen">$80.00</span></span></div>
+    </article>
+  </div>
+  <p class="footer">Use Sort by above to choose $/count or another unit. Choose Featured to restore the original order. Hover over a badge for its calculation.</p>
+  <script>
+    // The local fixture supplies the same preference API as Tampermonkey.
+    window.GM_getValue = (key, fallback) => {
+      const saved = localStorage.getItem('aup-preview-' + key);
+      return saved === null ? key === 'unit' ? 'count' : fallback : JSON.parse(saved);
+    };
+    window.GM_setValue = (key, value) => localStorage.setItem('aup-preview-' + key, JSON.stringify(value));
+  </script>
+  <script src="/amazon-unit-price.user.js"></script>
+</body>
+</html>

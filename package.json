@@ -1,0 +1,15 @@
+{
+  "name": "amazon-standard-unit-price",
+  "version": "1.3.3",
+  "license": "MIT",
+  "private": true,
+  "description": "Amazon userscript for search result sorting by weight, volume, count or length",
+  "scripts": {
+    "test": "node --test --test-isolation=none tests/*.test.cjs",
+    "check": "node --check amazon-unit-price.user.js",
+    "release": "node scripts/release.cjs",
+    "preview": "node scripts/preview.cjs"
+  },
+  "devDependencies": { "jsdom": "30.0.1" },
+  "engines": { "node": ">=24" }
+}
